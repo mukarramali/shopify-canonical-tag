@@ -18,11 +18,12 @@ export function EmptyList() {
         open={open}
         onSelection={(resources) => handleSelection(resources)}
         onCancel={() => setOpen(false)}
+        allowMultiple={false}
       />
       <EmptyState
         heading="Canonical Tag"
         action={{
-          content: "Select products",
+          content: "Select Product",
           onAction: () => setOpen(true),
         }}
         image={img}
