@@ -3,9 +3,8 @@ import gql from "graphql-tag";
 import { Query } from "react-apollo";
 
 const GET_PRODUCT_META_FIELDS = gql`
-  query productVariant($id: ID!) {
-    productVariant(id: $id) {
-      title
+  query product($id: ID!) {
+    product(id: $id) {
       metafields(first: 1) {
         edges {
           node {
@@ -21,9 +20,9 @@ const GET_PRODUCT_META_FIELDS = gql`
   }
 `;
 
-function MetaFields({ variantId }) {
+function MetaFields({ productId }) {
   return (
-    <Query query={GET_PRODUCT_META_FIELDS} variables={{ id: variantId }}>
+    <Query query={GET_PRODUCT_META_FIELDS} variables={{ id: productId }}>
       {({ data, loading, error, refetch }) => {
         if (loading) return <div>Loading…</div>;
         if (error) return <div>{JSON.stringify(error)}</div>;
@@ -34,17 +33,19 @@ function MetaFields({ variantId }) {
             <ResourceList
               showHeader
               resourceName={{ singular: "Metafield", plural: "Metafields" }}
-              items={data.productVariant.metafields.edges}
-              renderItem={({ node }) => {
+              items={data.product.metafields.edges}
+              renderItem={({ node: { id, key, namespace, value } }) => {
                 return (
-                  <ResourceList.Item id={node.id} verticalAlignment="center">
+                  <ResourceList.Item id={id} verticalAlignment="center">
                     <Stack alignment="center">
+                      <Stack.Item>
+                        <TextStyle>{key}</TextStyle>
+                      </Stack.Item>
+                      <Stack.Item>
+                        <TextStyle>{namespace}</TextStyle>
+                      </Stack.Item>
                       <Stack.Item fill>
-                        <h3>
-                          <TextStyle variation="strong">
-                            key:{node.key}, namespace: {node.namespace}
-                          </TextStyle>
-                        </h3>
+                        <TextStyle>{value}</TextStyle>
                       </Stack.Item>
                     </Stack>
                   </ResourceList.Item>
@@ -59,12 +60,9 @@ function MetaFields({ variantId }) {
 }
 
 export function ProductForm({ product }) {
-  console.log("ProductForm", { product });
-  const variantId = product?.variants?.[0]?.id;
-
   return (
     <>
-      <MetaFields variantId="gid://shopify/ProductVariant/39566498922519" />
+      <MetaFields productId={product.id} />
     </>
   );
 }

@@ -4,7 +4,7 @@ import { EmptyProduct } from "../components/EmptyProduct";
 import { ProductForm } from "../components/ProductForm";
 
 const Index = () => {
-  const [product, setProduct] = useState({});
+  const [product, setProduct] = useState();
   return (
     <Page>
       <Layout>
