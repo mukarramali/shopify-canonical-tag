@@ -37,14 +37,14 @@ POST: https://duskylory-store.myshopify.com/admin/oauth/access_token
 Params: client_id, client_secret, code
 
 ```sh
-curl -X POST --data '{"client_id":"b280fb1ae64bc9980f2e8e1156e4627c", "client_secret": "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", "code": "d23ad2d639b1c36bf339702b753702c4"}' https://duskylory-store.myshopify.com/admin/oauth/access_token
+curl -X POST --data '{"client_id":"", "client_secret": "", "code": ""}' https://duskylory-store.myshopify.com/admin/oauth/access_token
 ```
 
 ## Access Token
 
 ```json
 {
-  "access_token": "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",
+  "access_token": "",
   "scope": "unauthenticated_read_product_listings,write_products"
 }
 ```

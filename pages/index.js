@@ -1,10 +1,11 @@
-import { Heading, Page } from "@shopify/polaris";
-import { ImageForm } from "../components/ImageForm";
+import { Layout, Page } from "@shopify/polaris";
+import { EmptyList } from "../components/EmptyList";
 
 const Index = () => (
   <Page>
-    <Heading>Shopify app with Node and React 🎉</Heading>
-    <ImageForm />
+    <Layout>
+      <EmptyList />
+    </Layout>
   </Page>
 );
 
