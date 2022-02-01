@@ -3,12 +3,15 @@ import { EmptyState } from "@shopify/polaris";
 import { useCallback, useState } from "react";
 const img = "https://cdn.shopify.com/s/files/1/0757/9955/files/empty-state.svg";
 
-export function EmptyList() {
+export function EmptyProduct({ setProduct }) {
   const [open, setOpen] = useState(false);
-  const handleSelection = useCallback((resources) => {
-    setOpen(false);
-    console.log(resources);
-  }, []);
+  const handleSelection = useCallback(
+    (resources) => {
+      setOpen(false);
+      setProduct(resources.selection[0]);
+    },
+    [setProduct]
+  );
 
   return (
     <>
