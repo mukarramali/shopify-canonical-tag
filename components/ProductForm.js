@@ -1,7 +1,7 @@
 import { Banner, Card, Layout, TextField } from "@shopify/polaris";
 import gql from "graphql-tag";
 import { useCallback, useEffect, useState } from "react";
-import { useQuery } from "react-apollo";
+import { useMutation, useQuery } from "react-apollo";
 
 const GET_PRODUCT_META_FIELDS = gql`
   query product($id: ID!) {
@@ -21,16 +21,45 @@ const GET_PRODUCT_META_FIELDS = gql`
   }
 `;
 
+const UPDATE_PRODUCT_META_FIELD = gql`
+  mutation metafieldsSet($metafields: [MetafieldsSetInput!]!) {
+    metafieldsSet(metafields: $metafields) {
+      metafields {
+        value
+      }
+      userErrors {
+        field
+        message
+      }
+    }
+  }
+`;
+
 function MetaFields({ productId }) {
+  const [value, setValue] = useState();
+  const [initialValue, setInitialValue] = useState();
+  const [changed, setChanged] = useState(false);
+  const [status, setStatus] = useState();
+
   const { data } = useQuery(GET_PRODUCT_META_FIELDS, {
     variables: {
       id: productId,
     },
   });
-  const [value, setValue] = useState();
-  const [initialValue, setInitialValue] = useState();
-  const [changed, setChanged] = useState(false);
-  const [status, setStatus] = useState();
+  const [update, { loading: updateLoading, error: updateError }] = useMutation(
+    UPDATE_PRODUCT_META_FIELD,
+    {
+      variables: {
+        metafields: {
+          key: "canonical_tag",
+          namespace: "custom",
+          ownerId: productId,
+          type: "url",
+          value,
+        },
+      },
+    }
+  );
 
   useEffect(() => {
     if (data) {
@@ -46,7 +75,6 @@ function MetaFields({ productId }) {
   }, [data]);
 
   const onSuccess = () => {
-    console.log({ initialValue: value });
     setInitialValue(value);
     setStatus("success");
     setTimeout(() => {
@@ -54,12 +82,11 @@ function MetaFields({ productId }) {
     }, 2000);
   };
 
-  const onSubmit = useCallback(() => {
+  const onSubmit = useCallback(async () => {
     setChanged(false);
-    // Replace with actual query
-    setTimeout(() => {
-      onSuccess();
-    }, 3000);
+    // Replace with update query
+    await update();
+    setStatus("success");
   }, [onSuccess]);
 
   return (
