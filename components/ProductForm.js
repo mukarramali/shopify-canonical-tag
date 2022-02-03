@@ -36,7 +36,7 @@ const UPDATE_PRODUCT_META_FIELD = gql`
   }
 `;
 
-function MetaFields({ productId }) {
+function MetaFields({ productId, productTitle }) {
   const [value, setValue] = useState();
   const [initialValue, setInitialValue] = useState();
   const [changed, setChanged] = useState(false);
@@ -97,7 +97,7 @@ function MetaFields({ productId }) {
   return (
     <>
       <Card
-        title="Canonical Tag"
+        title={productTitle}
         sectioned
         footerActionAlignment="right"
         primaryFooterAction={{
@@ -128,7 +128,7 @@ function MetaFields({ productId }) {
 export function ProductForm({ product }) {
   return (
     <Layout.Section>
-      <MetaFields productId={product.id} />
+      <MetaFields productId={product.id} productTitle={product.title} />
     </Layout.Section>
   );
 }
