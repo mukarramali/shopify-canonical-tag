@@ -1,6 +1,7 @@
 import { Card, Layout, TextField } from "@shopify/polaris";
 import gql from "graphql-tag";
-import { Query } from "react-apollo";
+import { useEffect, useState } from "react";
+import { useQuery } from "react-apollo";
 
 const GET_PRODUCT_META_FIELDS = gql`
   query product($id: ID!) {
@@ -21,31 +22,36 @@ const GET_PRODUCT_META_FIELDS = gql`
 `;
 
 function MetaFields({ productId }) {
+  const { data } = useQuery(GET_PRODUCT_META_FIELDS, {
+    variables: {
+      id: productId,
+    },
+  });
+  const [value, setValue] = useState();
+  useEffect(() => {
+    if (data) {
+      const canonicalTagMetaField = data.product.metafields.edges.filter(
+        ({ node: { key, namespace } }) =>
+          key === "canonical_tag" && namespace === "custom"
+      )?.[0]?.node;
+      if (canonicalTagMetaField) {
+        setValue(canonicalTagMetaField.value);
+      }
+    }
+  }, [data]);
+
   return (
-    <Query query={GET_PRODUCT_META_FIELDS} variables={{ id: productId }}>
-      {({ data, loading, error, refetch }) => {
-        if (loading) return <div>Loading…</div>;
-        if (error) return <div>{JSON.stringify(error)}</div>;
-        if (!data) return <div>Nothing!</div>;
-        const canonicalTagMetaField = data.product.metafields.edges.filter(
-          ({ node: { key, namespace } }) =>
-            key === "canonical_tag" && namespace === "custom"
-        )?.[0]?.node;
-        return (
-          <Card
-            title="Canonical Tag"
-            sectioned
-            footerActionAlignment="right"
-            primaryFooterAction={{
-              disabled: false,
-              content: "Update",
-            }}
-          >
-            <TextField value={canonicalTagMetaField.value} />
-          </Card>
-        );
+    <Card
+      title="Canonical Tag"
+      sectioned
+      footerActionAlignment="right"
+      primaryFooterAction={{
+        disabled: false,
+        content: "Update",
       }}
-    </Query>
+    >
+      <TextField value={value} onChange={(newValue) => setValue(newValue)} />
+    </Card>
   );
 }
 
