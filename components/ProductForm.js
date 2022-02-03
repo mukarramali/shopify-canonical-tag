@@ -74,13 +74,10 @@ function MetaFields({ productId }) {
     }
   }, [data]);
 
-  const onSuccess = () => {
+  const onSuccess = useCallback(() => {
     setInitialValue(value);
     setStatus("success");
-    setTimeout(() => {
-      setStatus("");
-    }, 2000);
-  };
+  }, [setStatus, setInitialValue]);
 
   const onSubmit = useCallback(async () => {
     setChanged(false);
@@ -109,7 +106,13 @@ function MetaFields({ productId }) {
           }}
         />
       </Card>
-      {status && <Banner title="Updated!" status={status} />}
+      {status && (
+        <Banner
+          title="Updated!"
+          status={status}
+          onDismiss={() => setStatus(null)}
+        />
+      )}
     </>
   );
 }
