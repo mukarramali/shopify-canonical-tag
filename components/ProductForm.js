@@ -28,6 +28,9 @@ function MetaFields({ productId }) {
     },
   });
   const [value, setValue] = useState();
+  const [initialValue, setInitialValue] = useState();
+  const [changed, setChanged] = useState(false);
+
   useEffect(() => {
     if (data) {
       const canonicalTagMetaField = data.product.metafields.edges.filter(
@@ -36,6 +39,7 @@ function MetaFields({ productId }) {
       )?.[0]?.node;
       if (canonicalTagMetaField) {
         setValue(canonicalTagMetaField.value);
+        setInitialValue(canonicalTagMetaField.value);
       }
     }
   }, [data]);
@@ -46,11 +50,17 @@ function MetaFields({ productId }) {
       sectioned
       footerActionAlignment="right"
       primaryFooterAction={{
-        disabled: false,
+        disabled: !changed,
         content: "Update",
       }}
     >
-      <TextField value={value} onChange={(newValue) => setValue(newValue)} />
+      <TextField
+        value={value}
+        onChange={(newValue) => {
+          setValue(newValue);
+          setChanged(newValue !== initialValue);
+        }}
+      />
     </Card>
   );
 }
