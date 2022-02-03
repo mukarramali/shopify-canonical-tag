@@ -7,7 +7,7 @@ import usePrevProps from "./hooks";
 const GET_PRODUCT_META_FIELDS = gql`
   query product($id: ID!) {
     product(id: $id) {
-      metafields(first: 1) {
+      metafields(first: 100) {
         edges {
           node {
             id
@@ -59,7 +59,7 @@ function MetaFields({ productId, productTitle }) {
     {
       variables: {
         metafields: {
-          key: "canonical_tag",
+          key: "canonical_url",
           namespace: "custom",
           ownerId: productId,
           type: "url",
@@ -73,7 +73,7 @@ function MetaFields({ productId, productTitle }) {
     if (data) {
       const canonicalTagMetaField = data.product.metafields.edges.filter(
         ({ node: { key, namespace } }) =>
-          key === "canonical_tag" && namespace === "custom"
+          key === "canonical_url" && namespace === "custom"
       )?.[0]?.node;
       if (canonicalTagMetaField) {
         setValue(canonicalTagMetaField.value);
@@ -89,7 +89,6 @@ function MetaFields({ productId, productTitle }) {
 
   const onSubmit = useCallback(async () => {
     setChanged(false);
-    // Replace with update query
     await update();
     setStatus("success");
   }, [onSuccess]);
