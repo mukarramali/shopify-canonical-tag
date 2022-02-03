@@ -2,6 +2,7 @@ import { Banner, Card, Layout, TextField } from "@shopify/polaris";
 import gql from "graphql-tag";
 import { useCallback, useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-apollo";
+import usePrevProps from "./hooks";
 
 const GET_PRODUCT_META_FIELDS = gql`
   query product($id: ID!) {
@@ -40,6 +41,13 @@ function MetaFields({ productId }) {
   const [initialValue, setInitialValue] = useState();
   const [changed, setChanged] = useState(false);
   const [status, setStatus] = useState();
+  const prevProductId = usePrevProps(productId);
+
+  useEffect(() => {
+    if (prevProductId && prevProductId !== productId) {
+      setValue("");
+    }
+  }, [productId, prevProductId]);
 
   const { data } = useQuery(GET_PRODUCT_META_FIELDS, {
     variables: {
