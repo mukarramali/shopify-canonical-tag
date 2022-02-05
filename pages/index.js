@@ -2,6 +2,7 @@ import { ResourcePicker } from "@shopify/app-bridge-react";
 import { Button, Layout, Page } from "@shopify/polaris";
 import { useCallback, useState } from "react";
 import { EmptyProduct } from "../components/EmptyProduct";
+import { InstallationStep } from "../components/InstallationStep";
 import { ProductForm } from "../components/ProductForm";
 
 const Index = () => {
@@ -36,6 +37,7 @@ const Index = () => {
           onCancel={() => setOpen(false)}
           allowMultiple={false}
         />
+        <InstallationStep />
       </Layout>
     </Page>
   );
