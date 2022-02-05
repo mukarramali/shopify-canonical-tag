@@ -1,13 +1,22 @@
 import { Banner, Modal, TextContainer } from "@shopify/polaris";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useSearchParams } from "./hooks";
 
 export function InstallationStep() {
   const [active, setActive] = useState(true);
-  const shopifyDomain = "duskylory-store.myshopify.com";
+  const { shopifyDomain = "" } = useSearchParams();
+  const isActive = useBlockDetection();
+
+  useEffect(() => {
+    if (shopifyDomain.length > 0 && !isActive) {
+      setActive(true);
+    }
+  }, [shopifyDomain]);
+
   return (
     <div style={{ height: "500px" }}>
       <Modal
-        open={active}
+        open={!active}
         title="Installation Step"
         primaryAction={{
           content: "Update Theme",
