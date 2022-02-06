@@ -90,6 +90,7 @@ app.prepare().then(async () => {
     // const session = await Shopify.Utils.loadCurrentSession(ctx.req, ctx.res);
     const shop = ctx.params.shop;
     const accessToken = ACTIVE_SHOPIFY_SHOPS[shop];
+    console.log({ accessToken });
     const client = new Shopify.Clients.Rest(shop, accessToken);
 
     const themes = (
@@ -100,17 +101,19 @@ app.prepare().then(async () => {
 
     const themeId = themes.filter(({ role }) => role === "main")[0].id;
 
-    const assets = (
+    const asset = (
       await client.get({
+        // path: `themes/${themeId}/assets.json?asset[key]=config/settings_data.json&fields=value`,
         path: `themes/${themeId}/assets`,
-        query: { "asset%5Bkey%5D": "config%2Fsettings_data.json" },
+        // query: { "asset%5Bkey%5D": "config%5Fsettings_data.json", "fields": "value" },
+        query: { "asset[key]": "config/settings_data.json", fields: "value" },
       })
-    ).body.assets;
+    ).body.asset;
 
-    console.log(assets);
+    console.log(asset);
 
     ctx.body = {
-      assets,
+      exists: JSON.parse(asset.value).current.blocks,
     };
   });
 
