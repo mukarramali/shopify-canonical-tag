@@ -34,9 +34,17 @@ export const useBlockDetection = () => {
   useEffect(() => {
     if (shop) {
       axios
-        .get(`/api/theme/assets/${shop}`)
+        .get(`/api/theme/assets/blocks/${shop}`)
         .then((response) => response.data)
-        .then((data) => console.log({ data }));
+        .then(({ blocks }) => {
+          const disabled =
+            blocks?.[
+              Object.keys(blocks).find((blockId) =>
+                blocks[blockId].type.match(/canonicalTag/)
+              )
+            ]?.disabled;
+          setIsActive(!disabled);
+        });
     }
   }, [shop]);
   return isActive;
