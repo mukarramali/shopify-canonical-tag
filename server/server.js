@@ -86,6 +86,40 @@ app.prepare().then(async () => {
     }
   );
 
+  router.get("/api/theme/assets", async (ctx, next) => {
+    try {
+      const headers = {
+        "X-Shopify-Access-Token": ctx.cookies.get("accessToken"),
+      };
+
+      const themesURL = `https://${ctx.cookies.get(
+        "shopOrigin"
+      )}/admin/api/2020-04/themes.json`;
+
+      const { data: themes } = await axios.get(themesURL, {
+        headers,
+      });
+
+      const themeId = themes.themes.filter(({ role }) => role === "main")[0].id;
+
+      const assetURL = `https://${ctx.cookies.get(
+        "shopOrigin"
+      )}/admin/api/2020-04/themes/${themeId}/assets.json`;
+
+      const { data: assets } = await axios.get(assetURL, {
+        headers,
+      });
+
+      ctx.body = {
+        assets,
+      };
+    } catch (error) {
+      ctx.body = {
+        error,
+      };
+    }
+  });
+
   router.get("(/_next/static/.*)", handleRequest); // Static content is clear
   router.get("/_next/webpack-hmr", handleRequest); // Webpack content is clear
   router.get("(.*)", async (ctx) => {
