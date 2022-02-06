@@ -30,11 +30,14 @@ export const useSearchParams = () => {
 
 export const useBlockDetection = () => {
   const [isActive, setIsActive] = useState(true);
+  const { shop = "" } = useSearchParams();
   useEffect(() => {
-    axios
-      .get("/api/theme/assets")
-      .then((response) => response.data)
-      .then((data) => console.log({ data }));
-  }, []);
+    if (shop) {
+      axios
+        .get(`/api/theme/assets/${shop}`)
+        .then((response) => response.data)
+        .then((data) => console.log({ data }));
+    }
+  }, [shop]);
   return isActive;
 };

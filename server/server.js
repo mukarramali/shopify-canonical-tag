@@ -38,9 +38,9 @@ app.prepare().then(async () => {
     createShopifyAuth({
       async afterAuth(ctx) {
         // Access token and shop available in ctx.state.shopify
-        const { shop, accessToken, scope } = ctx.state.shopify;
+        const { shop, accessToken } = ctx.state.shopify;
         const host = ctx.query.host;
-        ACTIVE_SHOPIFY_SHOPS[shop] = scope;
+        ACTIVE_SHOPIFY_SHOPS[shop] = accessToken;
 
         const response = await Shopify.Webhooks.Registry.register({
           shop,
@@ -86,38 +86,32 @@ app.prepare().then(async () => {
     }
   );
 
-  router.get("/api/theme/assets", async (ctx, next) => {
-    try {
-      const headers = {
-        "X-Shopify-Access-Token": ctx.cookies.get("accessToken"),
-      };
+  router.get("/api/theme/assets/:shop", async (ctx, next) => {
+    // const session = await Shopify.Utils.loadCurrentSession(ctx.req, ctx.res);
+    const shop = ctx.params.shop;
+    const accessToken = ACTIVE_SHOPIFY_SHOPS[shop];
+    const client = new Shopify.Clients.Rest(shop, accessToken);
 
-      const themesURL = `https://${ctx.cookies.get(
-        "shopOrigin"
-      )}/admin/api/2020-04/themes.json`;
+    const themes = (
+      await client.get({
+        path: "themes",
+      })
+    ).body.themes;
 
-      const { data: themes } = await axios.get(themesURL, {
-        headers,
-      });
+    const themeId = themes.filter(({ role }) => role === "main")[0].id;
 
-      const themeId = themes.themes.filter(({ role }) => role === "main")[0].id;
+    const assets = (
+      await client.get({
+        path: `themes/${themeId}/assets`,
+        query: { "asset%5Bkey%5D": "config%2Fsettings_data.json" },
+      })
+    ).body.assets;
 
-      const assetURL = `https://${ctx.cookies.get(
-        "shopOrigin"
-      )}/admin/api/2020-04/themes/${themeId}/assets.json`;
+    console.log(assets);
 
-      const { data: assets } = await axios.get(assetURL, {
-        headers,
-      });
-
-      ctx.body = {
-        assets,
-      };
-    } catch (error) {
-      ctx.body = {
-        error,
-      };
-    }
+    ctx.body = {
+      assets,
+    };
   });
 
   router.get("(/_next/static/.*)", handleRequest); // Static content is clear
