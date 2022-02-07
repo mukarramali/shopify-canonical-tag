@@ -43,7 +43,7 @@ export const useBlockDetection = () => {
                 blocks[blockId].type.match(/canonicalTag/)
               )
             ]?.disabled;
-          setIsActive(!disabled);
+          setIsActive(disabled === false);
         });
     }
   }, [shop]);
