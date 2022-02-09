@@ -65,6 +65,14 @@ app.prepare().then(async () => {
 
   const handleRequest = async (ctx) => {
     await handle(ctx.req, ctx.res);
+    const shop =
+      ctx.query?.shop ||
+      ctx.params?.shop ||
+      new URLSearchParams(ctx.req.headers.referer).get("shop");
+    ctx.response.set(
+      "Content-Security-Policy",
+      `frame-ancestors https://${shop} ${Shopify.Context.HOST_NAME};`
+    );
     ctx.respond = false;
     ctx.res.statusCode = 200;
   };
