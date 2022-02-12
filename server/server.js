@@ -1,5 +1,6 @@
 import "@babel/polyfill";
 import createShopifyAuth, { verifyRequest } from "@shopify/koa-shopify-auth";
+import { receiveWebhook } from "@shopify/koa-shopify-webhooks";
 import Shopify, { ApiVersion } from "@shopify/shopify-api";
 import dotenv from "dotenv";
 import "isomorphic-fetch";
@@ -14,6 +15,8 @@ const app = next({
   dev,
 });
 const handle = app.getRequestHandler();
+
+const webhook = receiveWebhook({ secret: process.env.SHOPIFY_API_SECRET });
 
 Shopify.Context.initialize({
   API_KEY: process.env.SHOPIFY_API_KEY,
@@ -94,19 +97,19 @@ app.prepare().then(async () => {
     }
   );
 
-  router.post("/webhooks/shop_redact", (ctx, next) => {
+  router.post("/webhooks/shop_redact", webhook, (ctx, next) => {
     ctx.body = {
       success: true,
     };
   });
 
-  router.post("/webhooks/customers_redact", (ctx, next) => {
+  router.post("/webhooks/customers_redact", webhook, (ctx, next) => {
     ctx.body = {
       success: true,
     };
   });
 
-  router.post("/webhooks/customers_data_request", (ctx, next) => {
+  router.post("/webhooks/customers_data_request", webhook, (ctx, next) => {
     ctx.body = {
       success: true,
     };
