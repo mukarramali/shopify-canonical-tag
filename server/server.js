@@ -94,6 +94,24 @@ app.prepare().then(async () => {
     }
   );
 
+  router.post("/webhooks/shop_redact", (ctx, next) => {
+    ctx.body = {
+      success: true,
+    };
+  });
+
+  router.post("/webhooks/customers_redact", (ctx, next) => {
+    ctx.body = {
+      success: true,
+    };
+  });
+
+  router.post("/webhooks/customers_data_request", (ctx, next) => {
+    ctx.body = {
+      success: true,
+    };
+  });
+
   router.get("/api/theme/assets/blocks/:shop", async (ctx, next) => {
     const shop = ctx.params.shop;
     const accessToken = ACTIVE_SHOPIFY_SHOPS[shop];
