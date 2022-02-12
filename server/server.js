@@ -70,8 +70,7 @@ app.prepare().then(async () => {
       new URLSearchParams(ctx.req.headers.referer).get("shop");
     ctx.response.set(
       "Content-Security-Policy",
-      `frame-ancestors https://${shop} ${Shopify.Context.HOST_NAME};`
-      // "frame-ancestors https://google.com;"
+      `frame-ancestors https://${shop} https://admin.shopify.com;`
     );
     await handle(ctx.req, ctx.res);
     ctx.respond = false;

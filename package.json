@@ -4,7 +4,7 @@
   "description": "Shopify's node app for CLI tool",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon ./server/index.js --watch ./server/index.js",
-    "dev:build": "NEXT_TELEMETRY_DISABLED=1 next build && shopify app serve",
+    "serve": "NEXT_TELEMETRY_DISABLED=1 next build && shopify app serve",
     "prod": "shopify app serve",
     "start": "NEXT_TELEMETRY_DISABLED=1 next build && cross-env NODE_ENV=production node ./server/index.js"
   },
