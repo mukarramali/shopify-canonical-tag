@@ -64,7 +64,6 @@ app.prepare().then(async () => {
   );
 
   const handleRequest = async (ctx) => {
-    await handle(ctx.req, ctx.res);
     const shop =
       ctx.query?.shop ||
       ctx.params?.shop ||
@@ -72,7 +71,9 @@ app.prepare().then(async () => {
     ctx.response.set(
       "Content-Security-Policy",
       `frame-ancestors https://${shop} ${Shopify.Context.HOST_NAME};`
+      // "frame-ancestors https://google.com;"
     );
+    await handle(ctx.req, ctx.res);
     ctx.respond = false;
     ctx.res.statusCode = 200;
   };
