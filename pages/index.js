@@ -1,5 +1,5 @@
 import { ResourcePicker } from "@shopify/app-bridge-react";
-import { Button, Layout, Page } from "@shopify/polaris";
+import { Button, Layout, Page, Stack } from "@shopify/polaris";
 import { useCallback, useState } from "react";
 import { EmptyProduct } from "../components/EmptyProduct";
 import { InstallationStep } from "../components/InstallationStep";
@@ -23,12 +23,18 @@ const Index = () => {
     <Page>
       <Layout>
         <Layout.Section>
-          <Button primary={true} onClick={() => setOpen(true)}>
-            Choose Product
-          </Button>
-          <Button onClick={() => setShowInstructions(true)}>
-            Instructions
-          </Button>
+          <Stack>
+            <Stack.Item fill>
+              <Button primary={true} onClick={() => setOpen(true)}>
+                Choose Product
+              </Button>
+            </Stack.Item>
+            <Stack.Item>
+              <Button onClick={() => setShowInstructions(true)}>
+                Instructions
+              </Button>
+            </Stack.Item>
+          </Stack>
         </Layout.Section>
         {product ? (
           <ProductForm product={product} />
