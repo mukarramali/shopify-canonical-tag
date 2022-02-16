@@ -12,12 +12,16 @@ export function Instructions({ showInstructions, setShowInstructions }) {
         <Modal.Section>
           <TextContainer>
             <h6>Follow these steps to use the app</h6>
-            <strong>Step 1</strong>
-            <p>Choose a product you want to add a canonical tag for.</p>
-            <strong>Step 2</strong>
-            <p>Add the URL for the product in the field and save.</p>
-            <strong>Step 3</strong>
             <p>
+              <strong>Step 1 </strong>Choose a product you want to add a
+              canonical tag for.
+            </p>
+            <p>
+              <strong>Step 2 </strong>Add the URL for the product in the field
+              and save.
+            </p>
+            <p>
+              <strong>Step 3 </strong>
               You can check your product page to have an updated canonical tag
               (You can use online canonical URL checkers).
             </p>
