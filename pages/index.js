@@ -3,11 +3,14 @@ import { Button, Layout, Page } from "@shopify/polaris";
 import { useCallback, useState } from "react";
 import { EmptyProduct } from "../components/EmptyProduct";
 import { InstallationStep } from "../components/InstallationStep";
+import { Instructions } from "../components/Instructions";
 import { ProductForm } from "../components/ProductForm";
 
 const Index = () => {
   const [product, setProduct] = useState();
   const [open, setOpen] = useState(false);
+  const [showInstructions, setShowInstructions] = useState(false);
+
   const handleSelection = useCallback(
     (resources) => {
       setOpen(false);
@@ -22,6 +25,9 @@ const Index = () => {
         <Layout.Section>
           <Button primary={true} onClick={() => setOpen(true)}>
             Choose Product
+          </Button>
+          <Button onClick={() => setShowInstructions(true)}>
+            Instructions
           </Button>
         </Layout.Section>
         {product ? (
@@ -38,6 +44,10 @@ const Index = () => {
           allowMultiple={false}
         />
         <InstallationStep />
+        <Instructions
+          showInstructions={showInstructions}
+          setShowInstructions={setShowInstructions}
+        />
       </Layout>
     </Page>
   );

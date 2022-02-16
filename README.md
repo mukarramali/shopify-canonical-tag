@@ -6,7 +6,7 @@ Follow documentation: https://shopify.dev/apps/getting-started/create
 
 ## Demo
 
-https://canonical-tag-shopify.herokuapp.com/auth?shop=duskylory-store.myshopify.com
+https://canonical-tag.herokuapp.com/auth?shop=duskylory-store.myshopify.com
 
 ## ToDo
 
