@@ -13,7 +13,7 @@ export function InstallationStep() {
         title="Installation Step"
         primaryAction={{
           content: "Update Theme",
-          url: `https://${shopifyDomain}/admin/themes/current/editor?context=apps&template=product&activateAppId=47bdd50d-78ab-488d-8cc3-1593ea342f33/canonicalTag`,
+          url: `https://${shopifyDomain}/admin/themes/current/editor?context=apps&template=product&activateAppId=b437a4f2-e045-4b39-ba70-c44e21881a5d/canonicalTag`,
           external: true,
         }}
       >
