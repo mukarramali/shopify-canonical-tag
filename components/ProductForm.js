@@ -1,4 +1,12 @@
-import { Banner, Card, Layout, TextField } from "@shopify/polaris";
+import {
+  Banner,
+  Button,
+  Card,
+  Form,
+  FormLayout,
+  Layout,
+  TextField,
+} from "@shopify/polaris";
 import gql from "graphql-tag";
 import { useCallback, useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-apollo";
@@ -95,27 +103,32 @@ function MetaFields({ productId, productTitle }) {
 
   return (
     <>
-      <Card
-        title={productTitle}
-        sectioned
-        footerActionAlignment="right"
-        primaryFooterAction={{
-          disabled: !changed,
-          content: "Update",
-          onAction: onSubmit,
-        }}
-      >
-        <TextField
-          value={value}
-          onChange={(newValue) => {
-            setValue(newValue);
-            setChanged(newValue !== initialValue);
-          }}
-        />
+      <Card sectioned title={productTitle}>
+        <Form onSubmit={onSubmit}>
+          <FormLayout>
+            <TextField
+              value={value}
+              onChange={(newValue) => {
+                setValue(newValue);
+                setChanged(newValue !== initialValue);
+              }}
+              label="Meta Tag"
+              type="url"
+              helpText={
+                <span>
+                  This can always be set back to the original product URL
+                </span>
+              }
+            />
+            <Button submit primary disabled={!changed}>
+              Update
+            </Button>
+          </FormLayout>
+        </Form>
       </Card>
       {status && (
         <Banner
-          title="Updated!"
+          title="Updated! Should reflect within a min. How about you enjoy a glass of water ;)"
           status={status}
           onDismiss={() => setStatus(null)}
         />
