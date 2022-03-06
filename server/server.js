@@ -115,6 +115,10 @@ app.prepare().then(async () => {
     };
   });
 
+  router.get("/api/health", (ctx, next) => {
+    ctx.body = "Ok";
+  });
+
   router.get("/api/theme/assets/blocks/:shop", async (ctx, next) => {
     const shop = ctx.params.shop;
     const accessToken = ACTIVE_SHOPIFY_SHOPS[shop];
