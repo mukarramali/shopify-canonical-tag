@@ -35,6 +35,7 @@ const ACTIVE_SHOPIFY_SHOPS = {};
 
 app.prepare().then(async () => {
   const server = new Koa();
+  const healthRouter = new Router();
   const router = new Router();
   server.keys = [Shopify.Context.API_SECRET_KEY];
   server.use(
@@ -80,6 +81,10 @@ app.prepare().then(async () => {
     ctx.res.statusCode = 200;
   };
 
+  healthRouter.get("/api/health", (ctx, next) => {
+    ctx.body = "Ok";
+  });
+
   router.post("/webhooks", async (ctx) => {
     try {
       await Shopify.Webhooks.Registry.process(ctx.req, ctx.res);
@@ -113,10 +118,6 @@ app.prepare().then(async () => {
     ctx.body = {
       success: true,
     };
-  });
-
-  router.get("/api/health", (ctx, next) => {
-    ctx.body = "Ok";
   });
 
   router.get("/api/theme/assets/blocks/:shop", async (ctx, next) => {
