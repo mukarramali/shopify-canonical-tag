@@ -2,6 +2,8 @@ import { Banner, Modal, TextContainer } from "@shopify/polaris";
 import React from "react";
 import { useBlockDetection, useSearchParams } from "./hooks";
 
+const EXTENSION_UUID = "b540615e-1f76-4afc-a5d3-40ce6cdff70f";
+
 export function InstallationStep() {
   const { shop: shopifyDomain = "" } = useSearchParams();
   const isActive = useBlockDetection();
@@ -13,7 +15,7 @@ export function InstallationStep() {
         title="Installation Step"
         primaryAction={{
           content: "Update Theme",
-          url: `https://${shopifyDomain}/admin/themes/current/editor?context=apps&template=product&activateAppId=b437a4f2-e045-4b39-ba70-c44e21881a5d/canonicalTag`,
+          url: `https://${shopifyDomain}/admin/themes/current/editor?context=apps&template=product&activateAppId=${EXTENSION_UUID}/canonicalTag`,
           external: true,
         }}
       >
