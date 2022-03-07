@@ -1,10 +1,11 @@
 import { Banner, Modal, TextContainer } from "@shopify/polaris";
 import React from "react";
+import { EXTENSION_UUID } from "./environment";
 import { useBlockDetection, useSearchParams } from "./hooks";
 
-const EXTENSION_UUID = "b540615e-1f76-4afc-a5d3-40ce6cdff70f";
+//duskylory-store.myshopify.com/admin/themes/current/editor?context=apps&template=product&activateAppId=b540615e-1f76-4afc-a5d3-40ce6cdff70f/canonicalTag
 
-export function InstallationStep() {
+https: export function InstallationStep() {
   const { shop: shopifyDomain = "" } = useSearchParams();
   const isActive = useBlockDetection();
 

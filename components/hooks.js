@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
+import { EXTENSION_UUID } from "./environment";
 
 export default function usePrevProps(value) {
   const ref = useRef();
@@ -40,7 +41,7 @@ export const useBlockDetection = () => {
           const disabled =
             blocks?.[
               Object.keys(blocks).find((blockId) =>
-                blocks[blockId].type.match(/canonicalTag/)
+                blocks[blockId].type.match(new RegExp(EXTENSION_UUID))
               )
             ]?.disabled;
           setIsActive(disabled === false);
