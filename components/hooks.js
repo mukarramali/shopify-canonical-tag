@@ -1,6 +1,7 @@
 import axios from "axios";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { EXTENSION_UUID } from "./environment";
+import { LanguageContext } from "./LaguageProvider";
 
 export default function usePrevProps(value) {
   const ref = useRef();
@@ -28,6 +29,8 @@ export const useSearchParams = () => {
 
   return hash;
 };
+
+export const useLocale = useContext(LanguageContext);
 
 export const useBlockDetection = () => {
   const [isActive, setIsActive] = useState(true);

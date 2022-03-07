@@ -7,6 +7,7 @@ import translations from "@shopify/polaris/locales/en.json";
 import ApolloClient from "apollo-boost";
 import App from "next/app";
 import { ApolloProvider } from "react-apollo";
+import { LanguageProvider } from "../components/LaguageProvider";
 
 function userLoggedInFetch(app) {
   const fetchFunction = authenticatedFetch(app);
@@ -44,7 +45,9 @@ function MyProvider(props) {
 
   return (
     <ApolloProvider client={client}>
-      <Component {...props} />
+      <LanguageProvider>
+        <Component {...props} />
+      </LanguageProvider>
     </ApolloProvider>
   );
 }

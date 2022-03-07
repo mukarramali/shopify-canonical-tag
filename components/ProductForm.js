@@ -128,7 +128,7 @@ function MetaFields({ productId, productTitle }) {
       </Card>
       {status && (
         <Banner
-          title="Updated! Should reflect within a min. How about you enjoy a glass of water ;)"
+          title="Updated! Inspect it on https://www.seoreviewtools.com/canonical-url-location-checker. Should reflect within a min. How about you enjoy a glass of water ;)"
           status={status}
           onDismiss={() => setStatus(null)}
         />
