@@ -1,11 +1,11 @@
 import { ResourcePicker } from "@shopify/app-bridge-react";
 import { Button, Layout, Page, Stack } from "@shopify/polaris";
 import { useCallback, useState } from "react";
-import { EmptyProduct } from "../components/EmptyProduct";
-import { useLocale } from "../components/hooks";
-import { InstallationStep } from "../components/InstallationStep";
-import { Instructions } from "../components/Instructions";
-import { ProductForm } from "../components/ProductForm";
+import { EmptyProduct } from "../app/components/EmptyProduct";
+import { InstallationStep } from "../app/components/InstallationStep";
+import { Instructions } from "../app/components/Instructions";
+import { ProductForm } from "../app/components/ProductForm";
+import { useLocale } from "../app/hooks";
 
 const Index = () => {
   const [product, setProduct] = useState();

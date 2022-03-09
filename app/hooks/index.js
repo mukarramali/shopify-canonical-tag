@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useContext, useEffect, useRef, useState } from "react";
-import { EXTENSION_UUID } from "./environment";
-import { LanguageContext } from "./LanguageProvider";
+import { EXTENSION_UUID } from "../environment";
+import { LanguageContext } from "../providers/LanguageProvider";
 
 export default function usePrevProps(value) {
   const ref = useRef();

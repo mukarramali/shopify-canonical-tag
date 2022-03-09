@@ -1,7 +1,7 @@
 import { Banner, Modal, TextContainer } from "@shopify/polaris";
 import React from "react";
-import { EXTENSION_UUID } from "./environment";
-import { useBlockDetection, useSearchParams } from "./hooks";
+import { EXTENSION_UUID } from "../environment";
+import { useBlockDetection, useSearchParams } from "../hooks";
 
 export function InstallationStep() {
   const { shop: shopifyDomain = "" } = useSearchParams();

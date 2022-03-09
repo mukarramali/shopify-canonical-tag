@@ -10,7 +10,7 @@ import {
 import gql from "graphql-tag";
 import { useCallback, useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-apollo";
-import usePrevProps from "./hooks";
+import usePrevProps from "../hooks";
 
 const GET_PRODUCT_META_FIELDS = gql`
   query product($id: ID!) {
