@@ -7,7 +7,7 @@ import translations from "@shopify/polaris/locales/en.json";
 import ApolloClient from "apollo-boost";
 import App from "next/app";
 import { ApolloProvider } from "react-apollo";
-import { LanguageProvider } from "../components/LaguageProvider";
+import { LanguageProvider } from "../components/LanguageProvider";
 
 function userLoggedInFetch(app) {
   const fetchFunction = authenticatedFetch(app);

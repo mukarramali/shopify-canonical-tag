@@ -2,6 +2,7 @@ import { ResourcePicker } from "@shopify/app-bridge-react";
 import { Button, Layout, Page, Stack } from "@shopify/polaris";
 import { useCallback, useState } from "react";
 import { EmptyProduct } from "../components/EmptyProduct";
+import { useLocale } from "../components/hooks";
 import { InstallationStep } from "../components/InstallationStep";
 import { Instructions } from "../components/Instructions";
 import { ProductForm } from "../components/ProductForm";
@@ -10,6 +11,7 @@ const Index = () => {
   const [product, setProduct] = useState();
   const [open, setOpen] = useState(false);
   const [showInstructions, setShowInstructions] = useState(false);
+  const locale = useLocale();
 
   const handleSelection = useCallback(
     (resources) => {
