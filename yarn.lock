@@ -1304,13 +1304,13 @@
   dependencies:
     base64url "^3.0.1"
 
-"@shopify/koa-shopify-auth@^4.1.2":
-  version "4.1.4"
-  resolved "https://registry.yarnpkg.com/@shopify/koa-shopify-auth/-/koa-shopify-auth-4.1.4.tgz#22232bd9deb7e44dd2ec83f0bd525a7166f92a91"
-  integrity sha512-IcTnJTWewr60lRU04jOgtDm/KeRMi2PKHqRAuS3wjru9GRMHAxJhmEqPoEREWRPOxf8SnOPS4nyq5VsVOHoeqg==
+"@shopify/koa-shopify-auth@^5.0.3":
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/@shopify/koa-shopify-auth/-/koa-shopify-auth-5.0.3.tgz#54ebea4613dd5661cc3d9e7b12e9c0252e7272c3"
+  integrity sha512-dhe7mI1UXSYPRc8gMfSLjcvMCqne2UMfAY7XZZoyVPtRysrDLgIN8N0ZfdL9QGJ7ed5v1nAdGM+Q095JYCZVJg==
   dependencies:
     "@shopify/network" "^1.5.0"
-    "@shopify/shopify-api" "^1.2.1"
+    "@shopify/shopify-api" "^2.1.0"
     koa-compose ">=3.0.0 <4.0.0"
     nonce "^1.0.4"
     tslib "^1.9.3"
@@ -1365,10 +1365,10 @@
     react-transition-group "^4.4.1"
     serve "^12.0.0"
 
-"@shopify/shopify-api@^1.2.1":
-  version "1.4.3"
-  resolved "https://registry.yarnpkg.com/@shopify/shopify-api/-/shopify-api-1.4.3.tgz#b2398117bc6e59e0d59e410ebba5272795c5f2e8"
-  integrity sha512-X2/sXW0SQKeT8XSGNiJKRnIBPAbjR1dmyi4XgnARyyXI2LgE8Lm15Jh/JRmb4Gm+BZ/SuOnjDlDw2g6Y3MEtDw==
+"@shopify/shopify-api@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@shopify/shopify-api/-/shopify-api-2.1.0.tgz#750519188cf4cad8c65170ed05e4bd4aa65a5285"
+  integrity sha512-CI+CUc0b2+Iv4AFhKaIAvMpbTddyTIKM3O2Qk0wS1gcj5nRdSFg6JbeVThNOYYu/7rzf93J8qYF1E4OZl920CQ==
   dependencies:
     "@shopify/network" "^1.5.1"
     "@types/jsonwebtoken" "^8.5.0"
