@@ -2,7 +2,7 @@ import gql from "graphql-tag";
 import { useEffect } from "react";
 import { useQuery } from "react-apollo";
 
-export const LanguageContext = React.createContext(undefined);
+export const LanguageContext = React.createContext("en");
 
 // https://github.com/Shopify/quilt/tree/main/packages/react-i18n#translation
 const GET_LOCALE = gql`

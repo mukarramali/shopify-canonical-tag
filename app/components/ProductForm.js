@@ -11,6 +11,7 @@ import gql from "graphql-tag";
 import { useCallback, useEffect, useState } from "react";
 import { useMutation, useQuery } from "react-apollo";
 import usePrevProps from "../hooks";
+import { useTranslations } from "../i18n";
 
 const GET_PRODUCT_META_FIELDS = gql`
   query product($id: ID!) {
@@ -50,6 +51,7 @@ function MetaFields({ productId, productTitle }) {
   const [changed, setChanged] = useState(false);
   const [status, setStatus] = useState();
   const prevProductId = usePrevProps(productId);
+  const t = useTranslations();
 
   useEffect(() => {
     if (prevProductId && prevProductId !== productId) {
@@ -114,21 +116,17 @@ function MetaFields({ productId, productTitle }) {
               }}
               label="Meta Tag"
               type="url"
-              helpText={
-                <span>
-                  This can always be set back to the original product URL
-                </span>
-              }
+              helpText={<span>{t("restore_assurance")}</span>}
             />
             <Button submit primary disabled={!changed}>
-              Update
+              {t("update")}
             </Button>
           </FormLayout>
         </Form>
       </Card>
       {status && (
         <Banner
-          title="Updated! Inspect it on https://www.seoreviewtools.com/canonical-url-location-checker. Should reflect within a min. How about you enjoy a glass of water ;)"
+          title={t("success_msg")}
           status={status}
           onDismiss={() => setStatus(null)}
         />

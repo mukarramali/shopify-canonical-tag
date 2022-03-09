@@ -5,13 +5,13 @@ import { EmptyProduct } from "../app/components/EmptyProduct";
 import { InstallationStep } from "../app/components/InstallationStep";
 import { Instructions } from "../app/components/Instructions";
 import { ProductForm } from "../app/components/ProductForm";
-import { useLocale } from "../app/hooks";
+import { useTranslations } from "../app/i18n";
 
 const Index = () => {
   const [product, setProduct] = useState();
   const [open, setOpen] = useState(false);
   const [showInstructions, setShowInstructions] = useState(false);
-  const locale = useLocale();
+  const t = useTranslations();
 
   const handleSelection = useCallback(
     (resources) => {
@@ -28,12 +28,12 @@ const Index = () => {
           <Stack>
             <Stack.Item fill>
               <Button primary={true} onClick={() => setOpen(true)}>
-                Choose Product
+                {t("choose_product")}
               </Button>
             </Stack.Item>
             <Stack.Item>
               <Button onClick={() => setShowInstructions(true)}>
-                Instructions
+                {t("instructions")}
               </Button>
             </Stack.Item>
           </Stack>

@@ -1,29 +1,30 @@
 import { Modal, TextContainer } from "@shopify/polaris";
 import React from "react";
+import { useTranslations } from "../i18n";
 
 export function Instructions({ showInstructions, setShowInstructions }) {
+  const t = useTranslations();
   return (
     <div style={{ height: "500px" }}>
       <Modal
         open={showInstructions}
-        title="Instructions"
+        title={t("instructions")}
         onClose={() => setShowInstructions(false)}
       >
         <Modal.Section>
           <TextContainer>
-            <h6>Follow these steps to use the app</h6>
+            <h6>{t("instructions")}</h6>
             <p>
-              <strong>Step 1 </strong>Choose a product you want to add a
-              canonical tag for.
+              <strong>Step 1 </strong>
+              {t("instructions_step_1")}
             </p>
             <p>
-              <strong>Step 2 </strong>Add the URL for the product in the field
-              and save.
+              <strong>Step 2 </strong>
+              {t("instructions_step_2")}
             </p>
             <p>
               <strong>Step 3 </strong>
-              You can check your product page to have an updated canonical tag
-              (You can use online canonical URL checkers).
+              {t("instructions_step_3")}
             </p>
           </TextContainer>
         </Modal.Section>
