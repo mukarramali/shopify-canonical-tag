@@ -6,8 +6,8 @@ import { locales, useTranslations } from "../i18n";
 export function LanguageSelector() {
   const [selected, setSelected] = useState("en");
   const t = useTranslations();
-  const locale = useLocale();
-  const handleSelectChange = useCallback((value) => setSelected(value), []);
+  const { locale, changeLanguage } = useLocale();
+  const handleSelectChange = useCallback((value) => changeLanguage(value), []);
 
   useEffect(() => {
     if (locale) {
@@ -18,6 +18,7 @@ export function LanguageSelector() {
   return (
     <Select
       label={t("language")}
+      labelInline={true}
       options={locales}
       onChange={handleSelectChange}
       value={selected}

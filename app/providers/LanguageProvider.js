@@ -1,34 +1,19 @@
-import gql from "graphql-tag";
-import { useEffect } from "react";
-import { useQuery } from "react-apollo";
+import { useCallback } from "react";
 
 export const LanguageContext = React.createContext("en");
 
-// https://github.com/Shopify/quilt/tree/main/packages/react-i18n#translation
-const GET_LOCALE = gql`
-  query shopLocales($published: Boolean!) {
-    shopLocales(published: $published) {
-      primary
-      locale
-    }
-  }
-`;
-
 export const LanguageProvider = ({ children }) => {
-  const [locale, setLocale] = React.useState();
-  const { data } = useQuery(GET_LOCALE, {
-    variables: {
-      published: true,
+  const [locale, setLocale] = React.useState("en");
+
+  const changeLanguage = useCallback(
+    (value) => {
+      setLocale(value);
     },
-  });
-  useEffect(() => {
-    if (data) {
-      const defaultLocale = data.shopLocales.find((l) => l.primary);
-      setLocale(defaultLocale.locale);
-    }
-  }, [data]);
+    [setLocale]
+  );
+
   return (
-    <LanguageContext.Provider value={locale}>
+    <LanguageContext.Provider value={{ locale, changeLanguage }}>
       {children}
     </LanguageContext.Provider>
   );

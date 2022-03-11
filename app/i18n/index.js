@@ -177,7 +177,7 @@ const strings = {
 };
 
 export function useTranslations() {
-  const locale = useLocale();
+  const { locale } = useLocale();
   return useCallback((key) => strings[key][locale], [locale]);
 }
 
