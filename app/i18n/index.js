@@ -1,7 +1,38 @@
 import { useCallback } from "react";
 import { useLocale } from "../hooks";
 
+export const locales = [
+  {
+    value: "en",
+    label: "English",
+  },
+  {
+    value: "de",
+    label: "Deutsch",
+  },
+  {
+    value: "fr",
+    label: "Français",
+  },
+  {
+    value: "pt",
+    label: "Português",
+  },
+  {
+    value: "es",
+    label: "Española",
+  },
+];
+
 const strings = {
+  language: {
+    en: "Language",
+    de: "Sprache",
+    fr: "Langue",
+    pt: "Linguagem",
+    es: "Idioma",
+    it: "Lingua",
+  },
   choose_product: {
     en: "Choose Product",
     de: "Produkt auswählen",

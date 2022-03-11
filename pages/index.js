@@ -1,6 +1,7 @@
 import { ResourcePicker } from "@shopify/app-bridge-react";
 import { Button, Layout, Page, Stack } from "@shopify/polaris";
 import { useCallback, useState } from "react";
+import { LanguageSelector } from "../app/components";
 import { EmptyProduct } from "../app/components/EmptyProduct";
 import { InstallationStep } from "../app/components/InstallationStep";
 import { Instructions } from "../app/components/Instructions";
@@ -30,6 +31,9 @@ const Index = () => {
               <Button primary={true} onClick={() => setOpen(true)}>
                 {t("choose_product")}
               </Button>
+            </Stack.Item>
+            <Stack.Item>
+              <LanguageSelector />
             </Stack.Item>
             <Stack.Item>
               <Button onClick={() => setShowInstructions(true)}>
