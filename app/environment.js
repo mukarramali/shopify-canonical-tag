@@ -1,1 +1,1 @@
-export const EXTENSION_UUID = "b437a4f2-e045-4b39-ba70-c44e21881a5d";
+export const EXTENSION_UUID = "b540615e-1f76-4afc-a5d3-40ce6cdff70f";
