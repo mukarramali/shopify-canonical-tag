@@ -1,6 +1,6 @@
 import { createClient } from "redis";
-import { REDIS_PASSWORD, REDIS_SERVER } from "../app/environment";
+import { REDIS_PASSWORD, REDIS_PORT, REDIS_SERVER } from "../app/environment";
 
 export const redisClient = createClient({
-  url: `redis://:${REDIS_PASSWORD}@${REDIS_SERVER}:20730`,
+  url: `redis://:${REDIS_PASSWORD}@${REDIS_SERVER}:${REDIS_PORT}`,
 });
