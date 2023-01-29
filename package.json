@@ -2,6 +2,9 @@
   "name": "shopify-app-node",
   "version": "1.1.1",
   "description": "Shopify's node app for CLI tool",
+  "engines": {
+    "node": "^16.14.2"
+  },
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon ./server/index.js --watch ./server/index.js",
     "serve": "NEXT_TELEMETRY_DISABLED=1 next build && shopify app serve",
