@@ -7,6 +7,7 @@ import "isomorphic-fetch";
 import Koa from "koa";
 import Router from "koa-router";
 import next from "next";
+import { redisClient } from "./redis";
 
 dotenv.config();
 const port = parseInt(process.env.PORT, 10) || 8081;
@@ -29,13 +30,10 @@ Shopify.Context.initialize({
   SESSION_STORAGE: new Shopify.Session.MemorySessionStorage(),
 });
 
-// Storing the currently active shops in memory will force them to re-login when your server restarts. You should
-// persist this object in your app.
-const ACTIVE_SHOPIFY_SHOPS = {};
-
 app.prepare().then(async () => {
   const server = new Koa();
   const router = new Router();
+  await redisClient.connect();
   server.keys = [Shopify.Context.API_SECRET_KEY];
   server.use(
     createShopifyAuth({
@@ -43,15 +41,14 @@ app.prepare().then(async () => {
         // Access token and shop available in ctx.state.shopify
         const { shop, accessToken } = ctx.state.shopify;
         const host = ctx.query.host;
-        ACTIVE_SHOPIFY_SHOPS[shop] = accessToken;
+        await redisClient.set(shop, accessToken);
 
         const response = await Shopify.Webhooks.Registry.register({
           shop,
           accessToken,
           path: "/webhooks",
           topic: "APP_UNINSTALLED",
-          webhookHandler: async (topic, shop, body) =>
-            delete ACTIVE_SHOPIFY_SHOPS[shop],
+          webhookHandler: async (topic, shop, body) => redisClient.del(shop),
         });
 
         if (!response.success) {
@@ -117,7 +114,7 @@ app.prepare().then(async () => {
 
   router.get("/api/theme/assets/blocks/:shop", async (ctx, next) => {
     const shop = ctx.params.shop;
-    const accessToken = ACTIVE_SHOPIFY_SHOPS[shop];
+    const accessToken = await redisClient.get(shop);
     const client = new Shopify.Clients.Rest(shop, accessToken);
 
     const themes = (
@@ -145,11 +142,11 @@ app.prepare().then(async () => {
   router.get("(.*)", async (ctx) => {
     const shop = ctx.query.shop;
 
-    // This shop hasn't been seen yet, go through OAuth to create a session
-    if (ACTIVE_SHOPIFY_SHOPS[shop] === undefined) {
-      ctx.redirect(`/auth?shop=${shop}`);
-    } else {
+    const isShopHasLoggedInBefore = (await redisClient.get(shop)) !== undefined;
+    if (isShopHasLoggedInBefore) {
       await handleRequest(ctx);
+    } else {
+      ctx.redirect(`/auth?shop=${shop}`);
     }
   });
 
