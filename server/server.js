@@ -41,21 +41,6 @@ app.prepare().then(async () => {
         const { shop, accessToken } = ctx.state.shopify;
         const host = ctx.query.host;
         await redisClient.set(shop, accessToken);
-
-        const response = await Shopify.Webhooks.Registry.register({
-          shop,
-          accessToken,
-          path: "/webhooks",
-          topic: "APP_UNINSTALLED",
-          webhookHandler: async (topic, shop, body) => redisClient.del(shop),
-        });
-
-        if (!response.success) {
-          console.log(
-            `Failed to register APP_UNINSTALLED webhook: ${response.result}`
-          );
-        }
-
         // Redirect to app with shop parameter upon auth
         ctx.redirect(`/?shop=${shop}&host=${host}`);
       },
