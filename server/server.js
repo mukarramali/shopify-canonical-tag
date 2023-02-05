@@ -33,7 +33,6 @@ Shopify.Context.initialize({
 app.prepare().then(async () => {
   const server = new Koa();
   const router = new Router();
-  await redisClient.connect();
   server.keys = [Shopify.Context.API_SECRET_KEY];
   server.use(
     createShopifyAuth({
