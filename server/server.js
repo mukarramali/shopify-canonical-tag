@@ -126,8 +126,8 @@ app.prepare().then(async () => {
   router.get("(.*)", async (ctx) => {
     const shop = ctx.query.shop;
 
-    const isShopHasLoggedInBefore = (await redisClient.get(shop)) !== undefined;
-    if (isShopHasLoggedInBefore) {
+    const savedAccessToken = await redisClient.get(shop);
+    if (savedAccessToken !== undefined) {
       await handleRequest(ctx);
     } else {
       ctx.redirect(`/auth?shop=${shop}`);
