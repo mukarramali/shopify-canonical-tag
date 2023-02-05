@@ -1,6 +1,4 @@
-import { createClient } from "redis";
-import { REDIS_PASSWORD, REDIS_PORT, REDIS_SERVER } from "../app/environment";
+import Redis from "ioredis";
+import { REDIS_URI } from "../app/environment";
 
-export const redisClient = createClient({
-  url: `redis://:${REDIS_PASSWORD}@${REDIS_SERVER}:${REDIS_PORT}`,
-});
+export const redisClient = new Redis(REDIS_URI);

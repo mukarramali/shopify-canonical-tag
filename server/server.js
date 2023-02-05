@@ -33,7 +33,6 @@ Shopify.Context.initialize({
 app.prepare().then(async () => {
   const server = new Koa();
   const router = new Router();
-  await redisClient.connect();
   server.keys = [Shopify.Context.API_SECRET_KEY];
   server.use(
     createShopifyAuth({
@@ -42,21 +41,6 @@ app.prepare().then(async () => {
         const { shop, accessToken } = ctx.state.shopify;
         const host = ctx.query.host;
         await redisClient.set(shop, accessToken);
-
-        const response = await Shopify.Webhooks.Registry.register({
-          shop,
-          accessToken,
-          path: "/webhooks",
-          topic: "APP_UNINSTALLED",
-          webhookHandler: async (topic, shop, body) => redisClient.del(shop),
-        });
-
-        if (!response.success) {
-          console.log(
-            `Failed to register APP_UNINSTALLED webhook: ${response.result}`
-          );
-        }
-
         // Redirect to app with shop parameter upon auth
         ctx.redirect(`/?shop=${shop}&host=${host}`);
       },
@@ -142,8 +126,8 @@ app.prepare().then(async () => {
   router.get("(.*)", async (ctx) => {
     const shop = ctx.query.shop;
 
-    const isShopHasLoggedInBefore = (await redisClient.get(shop)) !== undefined;
-    if (isShopHasLoggedInBefore) {
+    const savedAccessToken = await redisClient.get(shop);
+    if (savedAccessToken !== undefined) {
       await handleRequest(ctx);
     } else {
       ctx.redirect(`/auth?shop=${shop}`);
